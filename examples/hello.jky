@@ -1,0 +1,29 @@
+// examples/hello.jky — JOCKY's first program.
+// Script mode: top-level statements ARE the program (no main() needed).
+package main
+
+const int ANSWER = 42;              // compile-time const
+int mask = 0b0010_0000;             // binary literal + underscore separator
+string path = r"C:\temp\dump";      // raw string: backslashes, no escaping
+
+fn banner(string who) -> string {   // fn keyword, type-first param, arrow return
+    return "== hello, " + who + " ==";
+}
+
+fn magic() -> (int, error) {        // multi-return tuple type
+    return (0x5F, nil);             // hex literal + nil error = success
+}
+
+print(banner("NTRO"));              // builtin print (first stdlib citizen)
+print(ANSWER + mask);
+print(path);
+
+auto n, err = magic();              // auto ONLY on call RHS + multi-assign
+if (err != nil) {                   // strict bool condition
+    print("magic failed");
+} else {
+    print(n);
+}
+
+bytes shell = x"9090c3";            // bytes hex literal, even digit count
+print(shell.len());                 // method call on bytes

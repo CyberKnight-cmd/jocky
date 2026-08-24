@@ -1,0 +1,16 @@
+/* JOCKY Runtime — Log / Part of libjocky. / Logging tools */
+#ifndef JKY_LOG_H
+#define JKY_LOG_H
+
+#include "jky_value.h"
+#include <stdio.h>
+
+typedef enum { JKY_LOG_INFO, JKY_LOG_WARN, JKY_LOG_ERROR } JkyLogLevel;
+
+void jky_log_init(JkyLogLevel min_level);
+void jky_log_info(JkyString *msg);
+void jky_log_warn(JkyString *msg);
+void jky_log_error(JkyString *msg);
+void jky_log_set_output(FILE *f);
+
+#endif // JKY_LOG_H

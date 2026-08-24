@@ -1,0 +1,12 @@
+fn main() -> void {
+    int auth_attempts = 0;
+    
+    log.info("Starting authorization loop...");
+    
+    while auth_attempts < 3 {
+        log.info("Attempting login...");
+        auth_attempts = auth_attempts + 1;
+    }
+    
+    log.info("Locking account!");
+}

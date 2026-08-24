@@ -1,0 +1,26 @@
+# Build artifacts
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.lib
+*.dll
+*.exp
+bin/
+temp/
+
+# Node.js
+website-display/node_modules/
+website-display/dist/
+website-display/.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Temp Files
+*.log
+_jky_stealth_pipe.*
