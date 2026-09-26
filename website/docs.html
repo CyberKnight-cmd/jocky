@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JOCKY Documentation</title>
+<meta name="description" content="Language documentation, compiler pipeline and contributor guides for JOCKY.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="docs">
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Documentation</span></nav>
+      <h1>JOCKY documentation</h1>
+      <p class="lede">Learn the language, understand how the compiler works, and find the guides you need to contribute.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap docs-layout">
+      <aside class="docs-side" aria-label="Documentation sections">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="getting-started.html">Getting started</a></li>
+          <li><a href="#language">Language documentation</a></li>
+        </ul>
+        <h4>Guide sections</h4>
+        <ul id="docs-side-index"></ul>
+        <h4>Compiler</h4>
+        <ul>
+          <li><a href="#pipeline">Compiler pipeline</a></li>
+          <li><a href="#jockyshield">JOCKYShield</a></li>
+        </ul>
+        <h4>Contribute</h4>
+        <ul>
+          <li><a href="#contributor-docs">Contributor guides</a></li>
+          <li><a href="#help">Getting help</a></li>
+        </ul>
+      </aside>
+
+      <div>
+        <div id="language" style="margin-bottom: 2.5rem">
+          <span class="eyebrow">Language documentation</span>
+          <h2>The JOCKY language guide</h2>
+          <p class="muted">The documentation lives with the source code in the repository's <a href="https://github.com/CyberKnight-cmd/jocky/tree/main/docs" data-site="docs"><code>docs</code> folder</a>. This list updates automatically whenever the docs change.</p>
+          <div id="docs-index"><p class="state">Loading the documentation index…</p></div>
+        </div>
+
+        <h2 id="pipeline">Compiler pipeline</h2>
+        <p class="muted">JOCKY source passes through these stages on its way to machine code. Each stage is its own part of the compiler, and each one is open to contributions.</p>
+        <ol class="flow">
+          <li>Lexer</li>
+          <li>Parser</li>
+          <li>AST</li>
+          <li>Semantic analysis</li>
+          <li>Type checking</li>
+          <li>LLVM IR generation</li>
+          <li>Optimization passes</li>
+          <li>Machine code</li>
+        </ol>
+        <div class="table-wrap" style="margin-bottom: 2.5rem"><table>
+          <thead><tr><th>Stage</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Lexer</td><td>Turns source text into a stream of tokens</td></tr>
+            <tr><td>Parser</td><td>Builds an abstract syntax tree (AST) from the tokens</td></tr>
+            <tr><td>Semantic analysis</td><td>Resolves names and scopes, and checks that the program makes sense</td></tr>
+            <tr><td>Type checking</td><td>Verifies that every expression and operation has a valid type</td></tr>
+            <tr><td>LLVM IR generation</td><td>Lowers the checked program to LLVM intermediate representation</td></tr>
+            <tr><td>Optimization passes</td><td>Transforms the IR to make the generated code faster and smaller</td></tr>
+            <tr><td>Runtime</td><td>Runtime components and standard libraries that compiled programs link against</td></tr>
+          </tbody>
+        </table></div>
+
+        <h2 id="jockyshield">JOCKYShield</h2>
+        <p style="margin-bottom: 2.5rem">JOCKYShield is JOCKY's code-transformation system. Read <a href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#jockyshield-and-code-transformation">JOCKYShield and Code Transformation</a> in the contributing guide before working on it.</p>
+
+        <h2 id="contributor-docs">Contributor guides</h2>
+        <p class="muted">Sections of <a href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md" data-site="contributing">CONTRIBUTING.md</a> for people working on JOCKY itself.</p>
+        <div class="grid grid-2" style="margin-bottom: 2.5rem">
+          <a class="card" href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#building-jocky"><h3>Building JOCKY</h3><p>Requirements and steps to build the compiler from source.</p><span class="more">Read</span></a>
+          <a class="card" href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#testing"><h3>Testing</h3><p>Run the test suite and add regression tests.</p><span class="more">Read</span></a>
+          <a class="card" href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#compiler-contributions"><h3>Compiler contributions</h3><p>Working on the lexer, parser, semantic analysis, type checker, IR generation and optimization passes.</p><span class="more">Read</span></a>
+          <a class="card" href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#language-and-standard-library-changes"><h3>Language and standard library changes</h3><p>How to propose changes to the language or its standard libraries.</p><span class="more">Read</span></a>
+          <a class="card" href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#forensic-tooling"><h3>Forensic tooling</h3><p>Contributing to JOCKY's digital-forensics tools and workflows.</p><span class="more">Read</span></a>
+          <a class="card" href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#submitting-pull-requests"><h3>Pull requests and commits</h3><p>How to submit a pull request and write commit messages.</p><span class="more">Read</span></a>
+        </div>
+
+        <h2 id="help">Getting help</h2>
+        <p>Can't find what you need? Ask in <a href="https://github.com/CyberKnight-cmd/jocky/discussions" data-site="discussions">GitHub Discussions</a>. If the documentation is wrong or unclear, <a href="https://github.com/CyberKnight-cmd/jocky/issues" data-site="issues">open an issue</a> or send a pull request. Documentation contributions are especially valuable.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+# Builds and deploys the JOCKY website to GitHub Pages.
+#
+# Place this file at .github/workflows/website.yml in the jocky repository,
+# with the site itself in the website/ folder.
+#
+# Rebuilds when:
+#   - anything in docs/ or website/ changes on main  -> docs index updates
+#   - a release is published, edited or deleted      -> news + downloads update
+#   - you run it manually from the Actions tab
+
+name: Website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "website/**"
+      - ".github/workflows/website.yml"
+  release:
+    types: [published, edited, deleted]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate docs index and releases
+        run: node website/scripts/build-data.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCS_DIR: docs
+          DOCS_BRANCH: ${{ github.event.repository.default_branch }}
+          OUT_DIR: website/data
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: website
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

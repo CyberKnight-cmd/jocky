@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JOCKY News</title>
+<meta name="description" content="Releases and announcements from the JOCKY project.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="news">
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>News</span></nav>
+      <h1>News from the JOCKY project</h1>
+      <p class="lede">Every release published on GitHub appears here automatically, with a summary of its release notes.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap with-aside">
+      <div id="news-posts"><p class="state">Loading releases from GitHub…</p></div>
+
+      <aside class="grid" style="gap: 1.25rem">
+        <div class="card">
+          <h3>Follow releases</h3>
+          <p>On the repository page, choose <b>Watch → Custom → Releases</b> to get an email for each new version.</p>
+          <a class="more" href="https://github.com/CyberKnight-cmd/jocky" data-site="repo">Open the repository</a>
+        </div>
+        <div class="card">
+          <h3>Other channels</h3>
+          <ul style="margin: 0">
+            <li><a href="https://github.com/CyberKnight-cmd/jocky/releases.atom" data-site="releasesFeed">Releases feed (Atom)</a></li>
+            <li><a href="https://github.com/CyberKnight-cmd/jocky/releases" data-site="releases">All releases on GitHub</a></li>
+            <li><a href="https://github.com/CyberKnight-cmd/jocky/discussions" data-site="discussions">GitHub Discussions</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

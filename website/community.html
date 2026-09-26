@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JOCKY Community</title>
+<meta name="description" content="Discussions, issue tracker, contributing guide and code of conduct for the JOCKY project.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="community">
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Community</span></nav>
+      <h1>The JOCKY community</h1>
+      <p class="lede">JOCKY is developed in the open on GitHub. Ask questions, share what you're building, and help shape the language.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Where to find us</h2>
+      <div class="grid grid-4" style="margin-top: 1.25rem">
+        <a class="card" href="https://github.com/CyberKnight-cmd/jocky/discussions" data-site="discussions"><h3>Discussions</h3><p>Questions, feature ideas and show-and-tell. New here? Start with the <b>welcome thread</b>.</p><span class="more">Open Discussions</span></a>
+        <a class="card" href="https://github.com/CyberKnight-cmd/jocky/issues" data-site="issues"><h3>Issue tracker</h3><p>Report reproducible bugs in the compiler, runtime, standard libraries or tools.</p><span class="more">View issues</span></a>
+        <a class="card" href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md" data-site="contributing"><h3>Contributing guide</h3><p>How to set up, build, test and submit changes to JOCKY.</p><span class="more">Read CONTRIBUTING.md</span></a>
+        <a class="card" href="https://github.com/CyberKnight-cmd/jocky/security/advisories/new" data-site="security"><h3>Security</h3><p>Report vulnerabilities privately. Please don't post them in public issues.</p><span class="more">Report privately</span></a>
+      </div>
+      <p style="margin-top: 1.5rem"><a class="btn btn-primary" href="https://github.com/CyberKnight-cmd/jocky/discussions/1" data-site="welcome">Introduce yourself in the welcome thread</a></p>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="contribute">
+    <div class="wrap">
+      <span class="eyebrow">Contribute</span>
+      <h2>You don't need to be a compiler engineer</h2>
+      <p class="lede" style="margin-bottom: 2rem">There are many ways to help, from fixing compiler bugs and improving documentation to designing language features and building forensic tooling. Contributors of every experience level are welcome.</p>
+      <div class="grid grid-4">
+        <div class="card"><h3>Code</h3><p>The compiler (lexer, parser, AST, semantic analysis, type checking, LLVM IR generation, optimization passes), JOCKYShield, runtime, standard libraries, forensic and CLI tooling, and CI.</p></div>
+        <div class="card"><h3>Documentation</h3><p>Getting-started guides, language and API docs, compiler and architecture docs, tutorials, examples, forensic workflows and troubleshooting.</p></div>
+        <div class="card"><h3>Testing</h3><p>Regression tests, compiler edge cases, new language features, other platforms, generated binaries and compiler benchmarks.</p></div>
+        <div class="card"><h3>Ideas</h3><p>Start a discussion about language features, compiler architecture, standard library APIs, forensic workflows, tooling, performance or security.</p></div>
+      </div>
+
+      <h3 style="margin-top: 2.5rem">Your first contribution</h3>
+      <p>Fork the repository on GitHub, then clone your fork:</p>
+      <div class="code" style="max-width: 720px"><pre data-lang="sh">
+$ git clone https://github.com/YOUR-USERNAME/jocky.git
+$ cd jocky
+</pre></div>
+      <p>The <a href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#development-workflow">development workflow</a> section of the guide walks you through the rest.</p>
+    </div>
+  </section>
+
+  <section class="section" id="conduct">
+    <div class="wrap grid grid-2" style="gap: 3rem; align-items: start">
+      <div class="prose">
+        <h2 style="margin-top: 0">Code of conduct</h2>
+        <p>Contributors come from different technical backgrounds and experience levels. Please be respectful and constructive. When participating:</p>
+        <ul>
+          <li>Be respectful to other contributors.</li>
+          <li>Critique code and ideas, not people.</li>
+          <li>Explain disagreements constructively.</li>
+          <li>Avoid harassment, discrimination and personal attacks.</li>
+          <li>Give credit where credit is due.</li>
+          <li>Assume good intent.</li>
+          <li>Help newcomers learn.</li>
+        </ul>
+        <p class="muted">Project maintainers may remove contributions or discussions that violate these principles.</p>
+      </div>
+      <div class="grid" style="gap: 1rem">
+        <div class="card" id="security">
+          <h3>Reporting a vulnerability</h3>
+          <p>Use GitHub's private vulnerability reporting so the issue can be fixed before it's made public.</p>
+          <a class="more" href="https://github.com/CyberKnight-cmd/jocky/security/advisories/new" data-site="security">Report privately</a>
+        </div>
+        <div class="card">
+          <h3>Stay updated</h3>
+          <p>On the repository page, choose <b>Watch → Custom → Releases</b> to get an email for each new release, or subscribe to the releases feed.</p>
+          <a class="more" href="https://github.com/CyberKnight-cmd/jocky/releases.atom" data-site="releasesFeed">Releases feed</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

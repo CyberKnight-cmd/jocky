@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JOCKY Language</title>
+<meta name="description" content="JOCKY is a forensic-first systems programming language and compiler ecosystem focused on low-level control, security, traceability and digital-forensics workflows.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="home">
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Just-in-time Optimized Compiler Kernel for sYstems</span>
+        <h1>The <em>forensic-first</em> systems programming language.</h1>
+        <p>JOCKY is a programming language and compiler ecosystem built for low-level control, security and traceability, with first-class support for practical digital-forensics workflows.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="downloads.html" data-download-primary>Download JOCKY</a>
+          <a class="btn btn-ghost btn-lg" href="getting-started.html">Get started</a>
+        </div>
+        <div class="hero-meta" data-release-meta><span>Checking GitHub for the latest release…</span></div>
+      </div>
+
+      <figure class="pipeline" style="margin: 0" aria-label="The JOCKY compiler pipeline">
+        <div class="pipeline-bar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><span>jocky · compiler pipeline</span></div>
+        <ol>
+          <li data-stage><span class="dot"></span><span>Lexer</span><span class="io">source → tokens</span></li>
+          <li data-stage><span class="dot"></span><span>Parser</span><span class="io">tokens → AST</span></li>
+          <li data-stage><span class="dot"></span><span>Semantic analysis</span><span class="io">names, scopes</span></li>
+          <li data-stage><span class="dot"></span><span>Type checking</span><span class="io">typed AST</span></li>
+          <li data-stage><span class="dot"></span><span>LLVM IR generation</span><span class="io">AST → IR</span></li>
+          <li data-stage><span class="dot"></span><span>Optimization passes</span><span class="io">IR → optimized IR</span></li>
+          <li data-stage><span class="dot"></span><span>Machine code</span><span class="io">via LLVM</span></li>
+        </ol>
+        <figcaption class="pipeline-foot"><b>JOCKYShield</b> adds a code-transformation layer on top of the pipeline. <a href="docs.html#pipeline" style="color: inherit">How the compiler works →</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid grid-4">
+      <div class="widget">
+        <h2 class="widget-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Get Started</h2>
+        <p>Get the toolchain, build it, and find your way around the language documentation.</p>
+        <a class="more" href="getting-started.html">Start here</a>
+      </div>
+      <div class="widget">
+        <h2 class="widget-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>Download</h2>
+        <p>Release builds are published on GitHub. You can also build JOCKY from source.</p>
+        <a class="more" href="downloads.html">Downloads</a>
+      </div>
+      <div class="widget">
+        <h2 class="widget-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h10a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 8h6M8 12h6"/></svg>Docs</h2>
+        <p>The language guide, compiler internals and contributor documentation.</p>
+        <a class="more" href="docs.html">Read the docs</a>
+      </div>
+      <div class="widget">
+        <h2 class="widget-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Discussions</h2>
+        <p>Ask questions, propose language features and share what you're building.</p>
+        <a class="more" href="https://github.com/CyberKnight-cmd/jocky/discussions" data-site="discussions">Join the conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <span class="eyebrow">What JOCKY is for</span>
+      <h2>Systems programming with forensics in mind</h2>
+      <p class="lede" style="margin-bottom: 2rem">Most languages treat investigation and traceability as someone else's problem. JOCKY builds them into the language, the compiler and the tooling.</p>
+      <div class="grid grid-3">
+        <div class="card"><h3>Low-level control</h3><p>Write code that sits close to the machine, with direct control over how your program is laid out and runs.</p></div>
+        <div class="card"><h3>Security</h3><p>Security is a design goal of the language and compiler from the start, not a layer added afterwards.</p></div>
+        <div class="card"><h3>Traceability</h3><p>Understand what your code became, from source through each compiler stage to the final binary.</p></div>
+        <div class="card"><h3>Forensic workflows</h3><p>Language features and tooling aimed at practical digital-forensics work.</p></div>
+        <div class="card"><h3>LLVM backend</h3><p>JOCKY generates LLVM IR and runs its own optimization passes before producing machine code.</p></div>
+        <div class="card"><h3>JOCKYShield</h3><p>A code-transformation system that is part of the JOCKY toolchain.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid grid-2" style="gap: 3rem">
+      <div>
+        <div class="feed-head"><h2>Latest Releases</h2><a href="news.html">All news</a></div>
+        <div id="news-feed"><p class="state">Loading releases from GitHub…</p></div>
+      </div>
+      <div>
+        <div class="feed-head"><h2>Community</h2><a href="community.html">More</a></div>
+        <ul class="feed">
+          <li><span class="mono muted">Start</span><div><a href="https://github.com/CyberKnight-cmd/jocky/discussions/1" data-site="welcome">Welcome thread: introduce yourself</a><span class="where">GitHub Discussions</span></div></li>
+          <li><span class="mono muted">Ask</span><div><a href="https://github.com/CyberKnight-cmd/jocky/discussions" data-site="discussions">Questions, ideas and show-and-tell</a><span class="where">GitHub Discussions</span></div></li>
+          <li><span class="mono muted">Report</span><div><a href="https://github.com/CyberKnight-cmd/jocky/issues" data-site="issues">Found a compiler bug? Open an issue</a><span class="where">GitHub Issues</span></div></li>
+          <li><span class="mono muted">Build</span><div><a href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md" data-site="contributing">Read the contributing guide</a><span class="where">CONTRIBUTING.md</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="card" style="flex-direction: row; flex-wrap: wrap; align-items: center; gap: 1.5rem; justify-content: space-between">
+        <div style="max-width: 60ch">
+          <h3>Help build JOCKY</h3>
+          <p style="margin: 0">You don't need to be a compiler engineer. Fix a bug, improve the docs, add tests or propose a language feature. Contributors of every experience level are welcome.</p>
+        </div>
+        <div style="display: flex; gap: .75rem; flex-wrap: wrap">
+          <a class="btn btn-primary" href="community.html#contribute">Ways to contribute</a>
+          <a class="btn btn-ghost" href="https://github.com/CyberKnight-cmd/jocky" data-site="repo">Source on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Download JOCKY</title>
+<meta name="description" content="Download JOCKY release builds from GitHub, or build the compiler from source.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="downloads">
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Downloads</span></nav>
+      <div class="dl-hero">
+        <div>
+          <h1>Download JOCKY</h1>
+          <p class="lede">Release builds are published on <a href="https://github.com/CyberKnight-cmd/jocky/releases" data-site="releases">GitHub Releases</a>, and this page always shows the latest one. You can also build the compiler from source.</p>
+        </div>
+        <div>
+          <a class="btn btn-primary btn-lg" href="#dl-title" data-download-primary>Download JOCKY</a>
+          <p class="dl-alt">Need a different platform? <a href="#dl-title">See all files</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 id="dl-title">Latest release</h2>
+      <div id="dl-files"><p class="state">Loading the latest release from GitHub…</p></div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="source">
+    <div class="wrap grid grid-2" style="gap: 3rem; align-items: start">
+      <div>
+        <h2>Build from source</h2>
+        <p>Clone the repository to build the latest development version of JOCKY.</p>
+        <div class="code"><pre data-lang="sh">
+$ git clone https://github.com/CyberKnight-cmd/jocky.git
+$ cd jocky
+</pre></div>
+        <p>Then follow the <a href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#building-jocky">Building JOCKY</a> section of the contributing guide for requirements and build steps, and <a href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#testing">Testing</a> to run the test suite.</p>
+      </div>
+      <div class="grid" style="gap: 1rem">
+        <div class="callout note">
+          <p><b>Verify your download.</b> GitHub lists a SHA-256 digest for each release file. Compare it with the file you downloaded:</p>
+          <div class="code" style="margin: .75rem 0 0"><pre data-lang="sh">
+# Linux
+$ sha256sum &lt;file&gt;
+# macOS
+$ shasum -a 256 &lt;file&gt;
+# Windows PowerShell
+PS> Get-FileHash &lt;file&gt; -Algorithm SHA256
+</pre></div>
+        </div>
+        <div class="callout">
+          <p><b>Get notified about new releases.</b> On the <a href="https://github.com/CyberKnight-cmd/jocky" data-site="repo">repository page</a>, choose <b>Watch → Custom → Releases</b>, or subscribe to the <a href="https://github.com/CyberKnight-cmd/jocky/releases.atom" data-site="releasesFeed">releases feed</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 id="all-releases">All releases</h2>
+      <div id="dl-all"><p class="state">Loading releases from GitHub…</p></div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap grid grid-3">
+      <a class="card" href="getting-started.html"><h3>Next: get started</h3><p>Set up the toolchain and find your way around the documentation.</p><span class="more">Getting started</span></a>
+      <a class="card" href="docs.html"><h3>Documentation</h3><p>The language guide, compiler internals and contributor documentation.</p><span class="more">Read the docs</span></a>
+      <a class="card" href="https://github.com/CyberKnight-cmd/jocky/issues" data-site="issues"><h3>Found a problem?</h3><p>Report installation problems or compiler bugs on the issue tracker.</p><span class="more">Open an issue</span></a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About JOCKY</title>
+<meta name="description" content="What JOCKY is, what its name means, and what the project focuses on.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="about">
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>About</span></nav>
+      <h1>About JOCKY</h1>
+      <p class="lede">JOCKY is a forensic-first systems programming language and compiler ecosystem focused on low-level control, security, traceability and practical digital-forensics workflows.</p>
+    </div>
+  </section>
+
+  <section class="section" id="name">
+    <div class="wrap grid grid-2" style="gap: 3rem; align-items: start">
+      <div>
+        <span class="eyebrow">The name</span>
+        <p class="acronym"><b>J</b>ust-in-time <b>O</b>ptimized <b>C</b>ompiler <b>K</b>ernel for s<b>Y</b>stems</p>
+        <p class="muted">Written in capitals as <b>JOCKY</b>.</p>
+      </div>
+      <div class="prose">
+        <h2 style="margin-top: 0">An ecosystem, not just a compiler</h2>
+        <p>JOCKY includes the compiler, from lexer and parser through semantic analysis, type checking, LLVM IR generation and optimization passes. It also includes runtime components, standard libraries, JOCKYShield for code transformation, forensic tooling, and command-line and developer tools.</p>
+        <p>The project is open source and developed on GitHub. Anyone can read the code, report problems, propose features and send changes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="focus">
+    <div class="wrap">
+      <span class="eyebrow">Focus areas</span>
+      <h2>What guides the design</h2>
+      <p class="lede" style="margin-bottom: 1.5rem">Language and compiler decisions are weighed against four goals.</p>
+      <ul class="principles">
+        <li><b>Low-level control.</b> Programmers decide how their code runs, close to the machine.</li>
+        <li><b>Security.</b> The language and toolchain are designed with security in mind from the start.</li>
+        <li><b>Traceability.</b> It should be possible to follow code from source to binary and understand every step.</li>
+        <li><b>Practical forensics.</b> Features should serve real digital-forensics workflows, not just theory.</li>
+      </ul>
+      <p style="margin-top: 1.5rem"><a href="https://github.com/CyberKnight-cmd/jocky/blob/main/CONTRIBUTING.md#design-philosophy">Read the full design philosophy in CONTRIBUTING.md →</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid grid-3">
+      <a class="card" href="getting-started.html"><h3>Try JOCKY</h3><p>Get the toolchain and start learning the language.</p><span class="more">Getting started</span></a>
+      <a class="card" href="https://github.com/CyberKnight-cmd/jocky/discussions" data-site="discussions"><h3>How decisions are made</h3><p>Language and compiler ideas are discussed in the open on GitHub Discussions before they are built.</p><span class="more">Discussions</span></a>
+      <a class="card" href="community.html#contribute"><h3>Get involved</h3><p>Code, documentation, testing and ideas are all welcome.</p><span class="more">Contribute</span></a>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="brand">
+    <div class="wrap prose">
+      <h2 style="margin-top: 0">Brand guidelines</h2>
+      <p>You may use the JOCKY name and logo to refer to the language, and in community projects, articles, talks and tools that work with JOCKY. Please don't modify the logo, and don't suggest that the JOCKY project endorses your work unless it does.</p>
+      <p class="muted">For anything else, ask in <a href="https://github.com/CyberKnight-cmd/jocky/discussions" data-site="discussions">Discussions</a>.</p>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
