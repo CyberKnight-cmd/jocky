@@ -28,6 +28,9 @@ const ICON_SUN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 const ICON_MOON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>`;
 const ICON_GH = `<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>`;
 
+// Pages generated inside docs/ set data-root="../" so shared links still resolve.
+const ROOT = document.body.dataset.root || "";
+
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 /* ---------- Header / footer ---------- */
@@ -49,7 +52,7 @@ function renderChrome() {
   <div class="wrap">
     <ul class="meta-tabs">
       <li><a href="index.html" aria-current="true">${SITE.name}</a></li>
-      <li><a href="${SITE.docs}">Docs</a></li>
+      <li><a href="docs.html">Docs</a></li>
       <li><a href="${SITE.discussions}">Discussions</a></li>
       <li><a href="${SITE.releases}">Releases</a></li>
     </ul>
@@ -92,7 +95,7 @@ function renderChrome() {
         <li><a href="${SITE.releases}">All releases on GitHub</a></li></ul></div>
       <div><h4>Documentation</h4><ul>
         <li><a href="getting-started.html">Getting started</a></li>
-        <li><a href="${SITE.docs}">Language documentation</a></li>
+        <li><a href="docs.html#language">Language documentation</a></li>
         <li><a href="docs.html#pipeline">Compiler pipeline</a></li>
         <li><a href="docs.html#contributor-docs">Contributor guides</a></li></ul></div>
       <div><h4>Community</h4><ul>
@@ -112,6 +115,12 @@ function renderChrome() {
   </div>
 </footer>`;
   }
+
+  // Prefix relative links in the shared header and footer when the page lives in a sub-folder.
+  if (ROOT) document.querySelectorAll(".meta-bar a, .site-header a, .site-footer a").forEach(a => {
+    const href = a.getAttribute("href");
+    if (href && !/^([a-z]+:|#|\/)/i.test(href)) a.setAttribute("href", ROOT + href);
+  });
 
   // Fill any link marked data-site="key" with the matching SITE URL.
   document.querySelectorAll("[data-site]").forEach(a => { if (SITE[a.dataset.site]) a.href = SITE[a.dataset.site]; });
@@ -211,7 +220,7 @@ function getReleasesFromApi() {
 }
 function getReleases() {
   if (!releasesPromise) {
-    releasesPromise = fetch("data/releases.json", { cache: "no-cache" })
+    releasesPromise = fetch(ROOT + "data/releases.json", { cache: "no-cache" })
       .then(r => { if (!r.ok) throw new Error("no releases.json"); return r.json(); })
       .then(d => d.releases)
       .catch(getReleasesFromApi);
@@ -224,7 +233,7 @@ function initDocsIndex() {
   const el = document.getElementById("docs-index");
   if (!el) return;
   const side = document.getElementById("docs-side-index");
-  fetch("data/docs.json", { cache: "no-cache" })
+  fetch(ROOT + "data/docs.json", { cache: "no-cache" })
     .then(r => { if (!r.ok) throw new Error(); return r.json(); })
     .then(d => {
       if (!d.groups.length) { setState(el, `No documentation files found yet. <a href="${SITE.docs}">Browse the docs folder on GitHub</a>.`); return; }
@@ -232,7 +241,7 @@ function initDocsIndex() {
       el.innerHTML = d.groups.map(g => `
         <h3 id="${slug(g.name)}" class="doc-group">${esc(g.name)} <span class="muted">${g.items.length}</span></h3>
         <ol class="doc-list">${g.items.map(i => `
-          <li><a href="${i.url}">${i.label ? `<span class="doc-label">${esc(i.label)}</span>` : ""}<span class="doc-title">${esc(i.title)}</span></a></li>`).join("")}
+          <li><a href="${ROOT}${i.page || i.url}">${i.label ? `<span class="doc-label">${esc(i.label)}</span>` : ""}<span class="doc-title">${esc(i.title)}</span></a></li>`).join("")}
         </ol>`).join("") +
         `<p class="muted doc-meta">${d.count} documents · index updated ${fmtDate(d.generatedAt)}${d.commit ? ` from commit <a href="${SITE.repo}/commit/${d.commit}"><code>${d.commit.slice(0, 7)}</code></a>` : ""}</p>`;
       if (side) side.innerHTML = d.groups.map(g => `<li><a href="#${slug(g.name)}">${esc(g.name)}</a></li>`).join("");
@@ -385,6 +394,81 @@ function initNews() {
   }).catch(() => { setState(feed, OFFLINE); setState(posts, OFFLINE); });
 }
 
+/* ---------- Docs search (data/search-index.json) ---------- */
+let searchPromise;
+const getSearchIndex = () => searchPromise || (searchPromise = fetch(ROOT + "data/search-index.json", { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error(); return r.json(); }));
+
+function searchDocs(index, q) {
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!words.length) return [];
+  const hits = [];
+  for (const doc of index) {
+    for (const s of doc.sections) {
+      const title = doc.title.toLowerCase(), head = s.heading.toLowerCase(), text = s.text.toLowerCase();
+      let score = 0;
+      for (const w of words) {
+        const inTitle = title.includes(w), inHead = head.includes(w), inText = text.includes(w);
+        if (!inTitle && !inHead && !inText) { score = 0; break; }
+        score += (inTitle ? 6 : 0) + (inHead ? 4 : 0) + (inText ? 1 : 0);
+      }
+      if (!score) continue;
+      if (!s.heading) score += 2;                        // prefer the page itself for title matches
+      hits.push({ score, doc, s });
+    }
+  }
+  hits.sort((a, b) => b.score - a.score);
+  const seen = new Set();
+  return hits.filter(h => { const k = h.doc.page + "#" + h.s.anchor; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 10);
+}
+
+function snippet(text, q) {
+  const w = q.toLowerCase().split(/\s+/).filter(Boolean)[0] || "";
+  const i = Math.max(0, text.toLowerCase().indexOf(w) - 40);
+  const cut = (i ? "…" : "") + text.slice(i, i + 140) + (text.length > i + 140 ? "…" : "");
+  return esc(cut).replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>");
+}
+
+function initDocSearch() {
+  document.querySelectorAll("[data-doc-search]").forEach(box => {
+    const input = box.querySelector("input");
+    const out = box.querySelector(".doc-search-results");
+    const render = () => {
+      const q = input.value.trim();
+      if (q.length < 2) { out.hidden = true; out.innerHTML = ""; return; }
+      getSearchIndex().then(index => {
+        const hits = searchDocs(index, q);
+        out.hidden = false;
+        out.innerHTML = hits.length
+          ? `<ul>${hits.map(h => `<li><a href="${ROOT}${h.doc.page}${h.s.anchor ? "#" + h.s.anchor : ""}">
+              <b>${esc(h.s.heading || h.doc.title)}</b>
+              <span class="doc-search-where">${esc(h.doc.label ? h.doc.label + " · " + h.doc.title : h.doc.title)}</span>
+              ${h.s.text ? `<span class="doc-search-snippet">${snippet(h.s.text, q)}</span>` : ""}</a></li>`).join("")}</ul>`
+          : `<p class="doc-search-empty">No results for “${esc(q)}”.</p>`;
+      }).catch(() => { out.hidden = false; out.innerHTML = `<p class="doc-search-empty">Search isn't available right now.</p>`; });
+    };
+    input.addEventListener("input", render);
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") { const first = out.querySelector("a"); if (first) { e.preventDefault(); location.href = first.href; } }
+      if (e.key === "Escape") { input.value = ""; render(); }
+    });
+    document.addEventListener("click", e => { if (!box.contains(e.target)) out.hidden = true; });
+    input.addEventListener("focus", render);
+  });
+}
+
+// The docs menu is always open on wide screens and collapsible on phones.
+function initDocNav() {
+  const nav = document.querySelector("[data-doc-nav]");
+  if (!nav) return;
+  const mq = matchMedia("(min-width: 861px)");
+  const sync = () => { if (mq.matches) nav.open = true; };
+  sync();
+  mq.addEventListener("change", sync);
+  // Scroll the menu (not the page) so the current chapter is visible.
+  const list = nav.querySelector("nav"), cur = nav.querySelector('[aria-current="page"]');
+  if (list && cur) list.scrollTop = cur.offsetTop - list.offsetTop - list.clientHeight / 3;
+}
+
 document.documentElement.id = "top";
 renderChrome();
 initTheme();
@@ -395,3 +479,5 @@ initDownloadButtons();
 initDownloadsPage();
 initNews();
 initDocsIndex();
+initDocSearch();
+initDocNav();

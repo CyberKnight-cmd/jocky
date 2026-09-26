@@ -98,9 +98,16 @@ exists yet.
 
 ## Adding documentation
 
-Put Markdown files in the repository's `docs/` folder and push to `main`. The
-Docs page lists them automatically, using only the file names. The files'
-contents are never read.
+Put Markdown files in the repository's `docs/` folder and push to `main`.
+Each file becomes a page on the website at `docs/<file>.html`, in the site's own
+design. Every page gets:
+
+- the chapter menu on the left and an "On this page" list of its `##` and `###` headings,
+- Previous / Next links in chapter order,
+- full-text search (the search box on the Docs page and on every docs page),
+- "Last updated" (from git history), "Edit this page on GitHub" and "Report a problem" links.
+
+The file name decides where a page appears in the menu:
 
 | File name | Shown as | Section |
 |---|---|---|
@@ -120,6 +127,31 @@ Tips:
 - Zero-pad chapter numbers (`ch01`, `ch02`, …). Sorting is numeric either way,
   but padded names also sort correctly on GitHub.
 - Renaming or deleting a file updates the list on the next push.
+- The page title is the file's first `# Heading`. If there isn't one, the title
+  comes from the file name.
+
+Writing tips:
+
+- Link to other docs with their Markdown file names, e.g.
+  `[Types](ch06_types.md#integers)`. They become links to the right page on the site.
+- Images and other files inside `docs/` (e.g. `docs/img/diagram.png`) are published
+  alongside the pages, so relative image links work.
+- Links to files outside `docs/` (e.g. `../CONTRIBUTING.md`) go to GitHub.
+- Use ```` ```console ```` for terminal sessions with `$` prompts. The Copy button
+  then copies only the commands.
+
+### Preview docs on your machine
+
+From the `website` folder:
+
+```bash
+npm install                     # once
+DOCS_DIR=../docs SITE_DIR=. SKIP_RELEASES=1 node scripts/build-data.mjs
+python3 -m http.server 8000     # then open http://localhost:8000/docs.html
+```
+
+The generated `docs/` and `data/` folders are ignored by git. The Action builds
+them fresh on every deploy.
 
 ---
 
@@ -133,3 +165,4 @@ Tips:
 | A file shows as "Other" | Add the OS to its name. |
 | Workflow fails at "deploy" | Settings → Pages → Source must be **GitHub Actions**. |
 | Docs page shows "Couldn't load the documentation index" | The site was deployed without the workflow. Deploy through the Action. |
+| A docs page is missing | The file must end in `.md` and live inside `docs/`. Check the Website run log for "docs: N pages". |

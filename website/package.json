@@ -1,0 +1,12 @@
+{
+  "name": "jocky-website",
+  "private": true,
+  "type": "module",
+  "description": "Build step for the JOCKY website: docs pages, docs index and releases data.",
+  "scripts": {
+    "build": "node scripts/build-data.mjs"
+  },
+  "dependencies": {
+    "marked": "^18.0.14"
+  }
+}

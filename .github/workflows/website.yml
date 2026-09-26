@@ -4,7 +4,7 @@
 # with the site itself in the website/ folder.
 #
 # Rebuilds when:
-#   - anything in docs/ or website/ changes on main  -> docs index updates
+#   - anything in docs/ or website/ changes on main  -> docs pages, index and search update
 #   - a release is published, edited or deleted      -> news + downloads update
 #   - every 6 hours, to catch binaries uploaded after a release was published
 #   - you run it manually from the Actions tab
@@ -40,18 +40,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history, for each docs page's "Last updated" date
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      - name: Generate docs index and releases
+      - name: Install build dependencies
+        run: npm install --prefix website --no-audit --no-fund
+
+      - name: Build docs pages, docs index, search index and releases
         run: node website/scripts/build-data.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCS_DIR: docs
+          DOCS_REPO_PATH: docs
           DOCS_BRANCH: ${{ github.event.repository.default_branch }}
-          OUT_DIR: website/data
+          SITE_DIR: website
+
+      - name: Remove build-only files from the published site
+        run: rm -rf website/node_modules website/scripts website/package.json website/package-lock.json website/PUBLISHING.md
 
       - uses: actions/configure-pages@v5
 
