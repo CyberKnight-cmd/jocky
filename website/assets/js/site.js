@@ -252,13 +252,30 @@ function detectOS() {
   return "";
 }
 const OS_LABEL = { windows: "Windows", macos: "macOS", linux: "Linux", "": "Other" };
+// macOS is checked first: "darwin" contains "win".
 function assetOS(name) {
-  if (/win|\.exe$|\.msi$/i.test(name)) return "windows";
   if (/mac|darwin|osx|apple|\.pkg$|\.dmg$/i.test(name)) return "macos";
+  if (/windows|win32|win64|(^|[-_.])win([-_.]|$)|\.exe$|\.msi$/i.test(name)) return "windows";
   if (/linux|\.deb$|\.rpm$|appimage/i.test(name)) return "linux";
   return "";
 }
-const isChecksum = name => /sha256|checksum|\.sig$|\.asc$|\.minisig$/i.test(name);
+function assetArch(name) {
+  if (/universal/i.test(name)) return "Universal";
+  if (/aarch64|arm64/i.test(name)) return "ARM64";
+  if (/x86[_-]?64|amd64|x64|win64/i.test(name)) return "x86-64";
+  if (/i[3-6]86|x86|win32/i.test(name)) return "x86";
+  return "";
+}
+const isChecksum = name => /sha256|sha512|checksum|\.sig$|\.asc$|\.minisig$|\.sbom|\.intoto/i.test(name);
+const platformLabel = name => [OS_LABEL[assetOS(name)], assetArch(name)].filter(Boolean).join(" · ") || "Other";
+
+// Best file for the visitor's OS. Browsers don't reliably report CPU type, so
+// prefer universal builds, then ARM64 on macOS (Apple silicon) and x86-64 elsewhere.
+function pickAsset(assets, os) {
+  const pref = os === "macos" ? ["Universal", "ARM64", "x86-64", ""] : ["x86-64", "Universal", "", "ARM64", "x86"];
+  const rank = a => { const i = pref.indexOf(assetArch(a.name)); return i < 0 ? 99 : i; };
+  return assets.filter(a => !isChecksum(a.name) && os && assetOS(a.name) === os).sort((a, b) => rank(a) - rank(b))[0];
+}
 
 function releaseExcerpt(body, n = 240) {
   const text = (body || "")
@@ -288,10 +305,10 @@ function initDownloadButtons() {
       return;
     }
     const os = detectOS();
-    const asset = rel.assets.find(a => !isChecksum(a.name) && assetOS(a.name) === os);
+    const asset = pickAsset(rel.assets, os);
     buttons.forEach(a => {
-      a.href = asset ? asset.browser_download_url : "downloads.html";
-      a.innerHTML = `<span>Download ${SITE.name} ${esc(rel.tag_name)}</span><small>${asset ? `for ${OS_LABEL[os]} · ${fmtSize(asset.size)}` : "See all files"}</small>`;
+      a.href = asset ? asset.browser_download_url : "downloads.html#dl-title";
+      a.innerHTML = `<span>Download ${SITE.name} ${esc(rel.tag_name)}</span><small>${asset ? `for ${platformLabel(asset.name)} · ${fmtSize(asset.size)}` : "See all files"}</small>`;
     });
     metas.forEach(m => (m.innerHTML = `<span>Latest <b>${esc(rel.tag_name)}</b></span><span>Released <b>${fmtDate(rel.published_at)}</b></span><span><a href="downloads.html#all-releases">Other versions →</a></span>`));
   }).catch(() => {
@@ -311,8 +328,9 @@ function initDownloadsPage() {
     const rel = latestStable(list);
     if (!rel) { setState(filesEl, NO_RELEASES); setState(allEl, "Once releases are published on GitHub they will be listed here automatically."); return; }
     if (titleEl) titleEl.textContent = `Files for ${SITE.name} ${rel.tag_name}`;
+    const best = pickAsset(rel.assets, os);
     const files = rel.assets.filter(a => !isChecksum(a.name))
-      .sort((a, b) => (assetOS(b.name) === os) - (assetOS(a.name) === os));
+      .sort((a, b) => (b === best) - (a === best) || (assetOS(b.name) === os) - (assetOS(a.name) === os) || a.name.localeCompare(b.name));
     const checks = rel.assets.filter(a => isChecksum(a.name));
     const row = (label, href, platform, size, digest, mine) => `
       <tr>
@@ -321,7 +339,7 @@ function initDownloadsPage() {
         <td class="num">${size}</td>
         <td class="sums">${digest ? esc(digest.replace(/^sha256:/, "")) : "—"}</td>
       </tr>`;
-    const rows = files.map(a => row(a.name, a.browser_download_url, OS_LABEL[assetOS(a.name)] || "Other", fmtSize(a.size), a.digest, os && assetOS(a.name) === os)).join("")
+    const rows = files.map(a => row(a.name, a.browser_download_url, platformLabel(a.name), fmtSize(a.size), a.digest, a === best)).join("")
       + row("Source code (zip)", rel.zipball_url, "Any", "—", "", false)
       + row("Source code (tar.gz)", rel.tarball_url, "Any", "—", "", false);
     filesEl.innerHTML = `

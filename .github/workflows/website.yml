@@ -6,6 +6,7 @@
 # Rebuilds when:
 #   - anything in docs/ or website/ changes on main  -> docs index updates
 #   - a release is published, edited or deleted      -> news + downloads update
+#   - every 6 hours, to catch binaries uploaded after a release was published
 #   - you run it manually from the Actions tab
 
 name: Website
@@ -19,6 +20,10 @@ on:
       - ".github/workflows/website.yml"
   release:
     types: [published, edited, deleted]
+  # Safety net: GitHub sends no event when binaries are uploaded to a release
+  # after it was published, so rebuild every 6 hours to pick up late uploads.
+  schedule:
+    - cron: "17 */6 * * *"
   workflow_dispatch:
 
 permissions:
