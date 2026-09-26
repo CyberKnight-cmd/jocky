@@ -68,6 +68,13 @@ jobs:
         with:
           path: website
 
+      # Also hand the finished site to the Vercel deploy job as an opaque folder.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: website
+          include-hidden-files: true
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -77,6 +84,32 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Deploy the same built site to Vercel. Downloads the folder the build job
+  # produced and pushes it as a prebuilt static deployment, so Vercel never
+  # builds anything itself and full git history / release triggers are preserved.
+  deploy-vercel:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: vercel-production
+      url: ${{ steps.vercel.outputs.url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site
+
+      - id: vercel
+        name: Deploy to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          url=$(npx --yes vercel@latest deploy site --prod --yes \
+            --token "${{ secrets.VERCEL_TOKEN }}")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Deployed to $url"
 
   # Keep the repository's Deployments list tidy: after a successful deploy,
   # delete every older github-pages deployment so only the live one remains.
