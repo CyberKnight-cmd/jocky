@@ -77,3 +77,24 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Keep the repository's Deployments list tidy: after a successful deploy,
+  # delete every older github-pages deployment so only the live one remains.
+  cleanup:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+    steps:
+      - name: Keep only the latest github-pages deployment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          # The API lists deployments newest first; skip the first (live) one.
+          ids=$(gh api --paginate "repos/$REPO/deployments?environment=github-pages&per_page=100" --jq '.[].id' | tail -n +2)
+          for id in $ids; do
+            # A deployment must be marked inactive before it can be deleted.
+            gh api -X POST "repos/$REPO/deployments/$id/statuses" -f state=inactive > /dev/null
+            gh api -X DELETE "repos/$REPO/deployments/$id" > /dev/null && echo "Deleted old deployment $id"
+          done
