@@ -26,9 +26,11 @@
           <a class="btn btn-ghost btn-lg" href="getting-started.html">Get started</a>
         </div>
         <div class="hero-meta" data-release-meta><span>Checking GitHub for the latest release…</span></div>
+
+        <p class="hero-tagline">The obfuscator is not a plugin — it's the heart of the compiler.</p>
       </div>
 
-      <figure class="pipeline" style="margin: 0" aria-label="The JOCKY compiler pipeline">
+      <figure class="pipeline pipeline-wide" style="margin: 0" aria-label="The JOCKY compiler pipeline with combined obfuscation">
         <div class="pipeline-bar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><span>jocky · compiler pipeline</span></div>
         <ol>
           <li data-stage><span class="dot"></span><span>Lexer</span><span class="io">source → tokens</span></li>
@@ -36,10 +38,11 @@
           <li data-stage><span class="dot"></span><span>Semantic analysis</span><span class="io">names, scopes</span></li>
           <li data-stage><span class="dot"></span><span>Type checking</span><span class="io">typed AST</span></li>
           <li data-stage><span class="dot"></span><span>LLVM IR generation</span><span class="io">AST → IR</span></li>
-          <li data-stage><span class="dot"></span><span>Optimization passes</span><span class="io">IR → optimized IR</span></li>
+          <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">Combined Obfuscation</span><span class="io">IR → polymorphic IR</span></li>
+          <li data-stage><span class="dot"></span><span>Optimization passes</span><span class="io">obfuscated IR → optimized</span></li>
           <li data-stage><span class="dot"></span><span>Machine code</span><span class="io">via LLVM</span></li>
         </ol>
-        <figcaption class="pipeline-foot"><b>JOCKYShield</b> adds a code-transformation layer on top of the pipeline. <a href="docs.html#pipeline" style="color: inherit">How the compiler works →</a></figcaption>
+        <figcaption class="pipeline-foot"><b>8-layer obfuscation</b> runs simultaneously after LLVM IR generation — before optimization. <a href="docs.html#pipeline" style="color: inherit">How the compiler works →</a></figcaption>
       </figure>
     </div>
   </section>
@@ -78,9 +81,58 @@
         <div class="card"><h3>Low-level control</h3><p>Write code that sits close to the machine, with direct control over how your program is laid out and runs.</p></div>
         <div class="card"><h3>Security</h3><p>Security is a design goal of the language and compiler from the start, not a layer added afterwards.</p></div>
         <div class="card"><h3>Traceability</h3><p>Understand what your code became, from source through each compiler stage to the final binary.</p></div>
+        <div class="card card-featured"><h3>JOCKYShield Obfuscator</h3><p><b>8-layer simultaneous obfuscation engine.</b> After LLVM IR generation, the compiler applies multiple compounding layers of advanced code obfuscation</p></div>
         <div class="card"><h3>Forensic workflows</h3><p>Language features and tooling aimed at practical digital-forensics work.</p></div>
         <div class="card"><h3>LLVM backend</h3><p>JOCKY generates LLVM IR and runs its own optimization passes before producing machine code.</p></div>
-        <div class="card"><h3>JOCKYShield</h3><p>A code-transformation system that is part of the JOCKY toolchain.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <span class="eyebrow">The Obfuscator</span>
+      <h2>8 simultaneous layers. Every build looks like a different program.</h2>
+      <p class="lede" style="margin-bottom: 2.5rem">The JOCKYShield Obfuscator doesn't just pack the binary — it <em>transforms</em> it at the IR level. Eight independent obfuscation passes run simultaneously after LLVM IR generation, each making the next harder to analyze. By the time LLVM optimization sees the IR, it's already unrecognizable.</p>
+
+      <div class="grid grid-2" style="gap: 2rem; margin-top: 2rem">
+        <div>
+          <figure class="pipeline" aria-label="Obfuscation pipeline diagram" style="margin: 0">
+            <div class="pipeline-bar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><span>combined obfuscation — 8 layers</span></div>
+            <ol>
+              <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">CMOV control flow</span><span class="io">no branching — flat CFG</span></li>
+              <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">Runtime-derived keys</span><span class="io">BLAKE2b XOR · no static blobs</span></li>
+              <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">Opaque predicate gates</span><span class="io">mathematical routing · no junk</span></li>
+              <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">Decoy function chains</span><span class="io">legit-looking · real dead ends</span></li>
+              <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">Polymorphic symbols</span><span class="io">dictionary-driven · no hex prefixes</span></li>
+              <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">Dispatch type rotation</span><span class="io">per-build dispatcher selection</span></li>
+              <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">Synthetic call graph</span><span class="io">poisoned · looks real</span></li>
+              <li data-stage data-stage-featured><span class="dot dot-obf"></span><span class="stage-name stage-obf">Stack frame randomization</span><span class="io">shifting offsets · no fixed layout</span></li>
+            </ol>
+            <figcaption class="pipeline-foot">Each pass runs <b>simultaneously</b> — not sequentially. The layers compound to create high LLM resistance against static analysis.</figcaption>
+          </figure>
+        </div>
+        <div>
+          <h3 style="margin-top: 0">Why simultaneous, not sequential?</h3>
+          <p>Research into LLM-powered deobfuscation shows that <strong>single-layer obfuscation is progressively transparent</strong> — modern AI models can deobfuscate CFG flattening, string XOR, and polymorphic symbols individually. But the research consistently finds <strong>universal failure against combined techniques</strong>.</p>
+          <p>By applying all 8 layers at once — each layer obscuring a different detection vector — the obfuscator defeats:</p>
+          <ul style="list-style: none; padding-left: 0">
+            <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-border)">
+              <b>Static analysis</b> — encrypted strings, no plaintext .rdata, unique hash per build
+            </li>
+            <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-border)">
+              <b>YARA rules</b> — no fixed byte patterns, polymorphic symbols each build
+            </li>
+            <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-border)">
+              <b>Behavioral telemetry</b> — decoy functions, legitimate API patterns
+            </li>
+            <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-border)">
+              <b>LLM deobfuscation</b> — combined techniques create high resistance
+            </li>
+            <li style="padding: 0.4rem 0">
+              <b>Kernel callbacks</b> — indirect syscalls, ETW layering
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
